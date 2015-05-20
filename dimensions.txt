@@ -1,0 +1,10 @@
+Component		1/285 		real 	human   our size   our scale
+overall pod len short	24.74 mm			7496 mm		x303
+overall pod len exten	28.99 mm			8787 mm		x303
+pod main diameter	3.4 mm		969 mm		89.33 mm	x303
+pod main inner diameter					76.5  mm
+muzzle first step	1.7 mm				515.1 mm
+muzzle final		1.36 mm				412.08 mm
+muzzle first to final	1.84 mm				557.52 mm	x303
+
+
