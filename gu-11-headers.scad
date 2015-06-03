@@ -4,7 +4,7 @@ pod_wall_thickness =		pod_r_outer - pod_r_wall_inner;
 
 ammo_d	 =			13 ;
 ammo_r	 =			ammo_d / 2 ;
-ammo_r_inner = 			pod_r_wall_inner - (2 * ammo_r ) ; 
+ammo_chamber_inner_r =		pod_r_wall_inner - (2 * ammo_r ) ; 
 
 muzzle_r_first_step =		pod_r_outer - 15 ;// WAS 44.66 /2 ;
 muzzle_r_final_step =		35.72 /2 ;
@@ -32,6 +32,7 @@ module zero_pane() {
 	color("lightblue")  cube([100,100,0.1], center=true);
 }
 
-echo("Loaded header definitions...");
+echo("Loaded header definitions from <gu-11-headers.scad>...");
+echo ();
 
 
