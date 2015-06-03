@@ -1,22 +1,21 @@
+include <gu-11-headers.scad>;
+
 FN=30;
-FN_pod=60;
+FN_pod=90;
 
-pod_r_outer = 					89.33 /2;
-pod_r_wall_inner = 			76.5 /2;
-pod_wall_thickness =		pod_r_outer - pod_r_wall_inner;
-
-muzzle_r_first_step =		44.66 /2 ;
-muzzle_r_final_step =		35.72 /2 ;
-muzzle_h_first_to_final =	48.34 ;
-
-muzzle_r_inner =			muzzle_r_final_step - pod_wall_thickness ;
-
-muzzle_r_insert =			pod_r_wall_inner;
-muzzle_h_insert =			20;
+echo("pod_r_outer ", pod_r_outer);
+echo("pod_r_wall_inner ", pod_r_wall_inner);
+echo("pod_wall_thickness ", pod_wall_thickness);
+echo("muzzle_r_inner ", muzzle_r_inner);
+echo("muzzle_r_insert ",muzzle_r_insert);
+echo("muzzle_h_insert ",muzzle_h_insert);
+echo("ammo_d ", ammo_d	 );
+echo("ammo_r ", ammo_r	);
 
 
 // zero pane
-*color("lightblue")  cube([100,100,0.1], center=true);
+*  zero_pane();
+
 
 // Top of round bit
 *translate([0,0,muzzle_h_insert+muzzle_r_first_step])
