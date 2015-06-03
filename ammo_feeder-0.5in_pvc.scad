@@ -27,9 +27,9 @@ echo("pvc_05in_hamper_r_inner ", pvc_05in_hamper_r_inner);
 echo("pvc_05in_offset ", pvc_05in_offset);
 
 ammo_chamber_half_inner_r =	(pod_r_wall_inner-ammo_chamber_inner_r)/2 + ammo_chamber_inner_r ;
-ammo_feeder_cut_r = ammo_chamber_inner_r + ammo_d * 3/4 ;
+ammo_feeder_cut_r = ammo_chamber_inner_r + ammo_d * 1;  // WAS *3/4
 		// WAS ammo_chamber_half_inner_r + 1;
-ammo_feeder_circle_position_r = ammo_chamber_inner_r + ammo_d * 16/4 ;
+ammo_feeder_circle_position_r = ammo_chamber_inner_r + ammo_d * 1/4 ;
 		// WAS ammo_chamber_half_inner_r - 1 ;
 ammo_offset = 	sqrt(3*ammo_feeder_circle_position_r*ammo_feeder_circle_position_r);
 
@@ -39,6 +39,8 @@ ammo_slot_r = pvc_05in_r_outer;
 
 echo(" *** This block of ECHOs from ammo_feeder-05in_pvc.scad ***");
 echo("ammo_chamber_half_inner_r= ", ammo_chamber_half_inner_r);
+echo("ammo_feeder_cut_r ", ammo_feeder_cut_r);
+echo("ammo_feeder_circle_position_r ", ammo_feeder_circle_position_r);
 echo("ammo_offset = ", ammo_offset );
 echo("sqrt 3 * r = " , sqrt(3) * ammo_feeder_circle_position_r, "(should match above)");
 
