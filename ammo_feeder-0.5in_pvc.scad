@@ -26,8 +26,17 @@ echo("pvc_05in_600psi_r_inner ", pvc_05in_600psi_r_inner);
 echo("pvc_05in_hamper_r_inner ", pvc_05in_hamper_r_inner);
 echo("pvc_05in_offset ", pvc_05in_offset);
 
-echo(" *** This block of ECHOs from pvc_hoder-0.5in.scad ***");
-echo("sqrt 3 * r = " , sqrt(3) * pvc_05in_r_outer, "(should match above)");
+ammo_chamber_half_inner_r=	(pod_r_wall_inner-ammo_chamber_inner_r)/2 + ammo_chamber_inner_r ;
+ammo_offset = 	sqrt(3*ammo_chamber_half_inner_r*ammo_chamber_half_inner_r);
+ammo_slot_r = pvc_05in_315psi_r_inner ;// pvc_05in_r_outer;
+
+
+echo(" *** This block of ECHOs from ammo_feeder-05in_pvc.scad ***");
+echo("ammo_chamber_half_inner_r= ", ammo_chamber_half_inner_r);
+echo("ammo_offset = ", ammo_offset );
+echo("sqrt 3 * r = " , sqrt(3) * ammo_chamber_half_inner_r, "(should match above)");
+
+echo("ammo_slot_r ", ammo_slot_r);
 
 
 // Zero Pane
@@ -38,7 +47,15 @@ echo("sqrt 3 * r = " , sqrt(3) * pvc_05in_r_outer, "(should match above)");
 *color("red")	cylinder(r=1, h= 2* muzzle_h_insert);
 
 
-projection(cut=false)
+//  This test piece shows full inner diameter of pod
+%		translate([0,0,muzzle_h_insert/2])
+			cylinder(r=pod_r_wall_inner, //muzzle_r_first_step, 
+					h=muzzle_h_insert,
+					center=true, $fn=FN_pod);
+
+
+
+//projection(cut=false)
 {	//  MAKE IT Flat!
 
 //color("blue")
@@ -46,10 +63,14 @@ projection(cut=false)
 //		union(){
 			color("blue")
 				translate([0,0,muzzle_h_insert/2])
-					cylinder(r=pod_r_wall_inner, //muzzle_r_first_step, 
+					cylinder(r=ammo_chamber_half_inner_r,
 								h=muzzle_h_insert,
 								center=true, $fn=FN_pod);
+
+
 		union() color("red") {
+
+		// ===== These are the holes for the PVC =====
 			// top
 			translate([0,pvc_05in_offset*2/3,muzzle_h_insert/2])
 				cylinder(r=pvc_05in_r_outer, 
@@ -71,6 +92,25 @@ projection(cut=false)
 				cylinder(r=pvc_05in_r_outer*2/3, 
 							h=muzzle_h_insert+2,
 							center=true, $fn=FN_pod);
+
+
+		// ===== These are the slots for the darts =====
+			// top
+			translate([0,ammo_offset*2/3,muzzle_h_insert/2])
+				cylinder(r=ammo_slot_r, 
+							h=muzzle_h_insert+2,
+							center=true, $fn=FN_pod);
+			//bottom left
+			translate([-ammo_chamber_half_inner_r,ammo_offset/-3,muzzle_h_insert/2])
+				cylinder(r=ammo_slot_r, 
+							h=muzzle_h_insert+2,
+							center=true, $fn=FN_pod);
+			//bottom right
+			translate([ammo_chamber_half_inner_r,ammo_offset/-3,muzzle_h_insert/2])
+				cylinder(r=ammo_slot_r, 
+							h=muzzle_h_insert+2,
+							center=true, $fn=FN_pod);
+
 
 // Comment out this block to get the solid piece
 			// Thin circle that cuts out `bearing ring`
