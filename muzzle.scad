@@ -84,14 +84,14 @@ difference() {
 
 
 		color("grey")	// Main Muzzle tip
-			translate([0,0,muzzle_step*3])
+			translate([0,0,muzzle_step*2.5])
 				cylinder(r1=ammo_chamber_inner_r+pod_wall_thickness, 
 							r2=ammo_chamber_inner_r+pod_wall_thickness-2.5,
-							h=muzzle_step*4,
+							h=muzzle_step*3,
 							center=true, $fn=FN_pod);
 
 		color("lightgrey")	// Very tip of muzzle
-			translate([0,0,muzzle_step*5])
+			translate([0,0,muzzle_step*4])
 				cylinder(r1=ammo_chamber_inner_r+pod_wall_thickness-2.5,
 							r2=ammo_chamber_inner_r,
 							h=2,
