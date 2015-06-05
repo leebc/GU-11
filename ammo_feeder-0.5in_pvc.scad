@@ -26,19 +26,23 @@ echo("pvc_05in_600psi_r_inner ", pvc_05in_600psi_r_inner);
 echo("pvc_05in_hamper_r_inner ", pvc_05in_hamper_r_inner);
 echo("pvc_05in_offset ", pvc_05in_offset);
 
-ammo_chamber_half_inner_r =	(pod_r_wall_inner-ammo_chamber_inner_r)/2 + ammo_chamber_inner_r ;
-ammo_feeder_cut_r = ammo_chamber_inner_r + ammo_d * 1;  // WAS *3/4
+ammo_chamber_middle_r =	(pod_r_wall_inner-ammo_chamber_inner_r)/2 + ammo_chamber_inner_r ;
+ammo_feeder_cut_r = pod_r_wall_inner - 2 ;
+		// WAS ammo_r * 0;  // WAS *3/4
 		// WAS ammo_chamber_half_inner_r + 1;
-ammo_feeder_circle_position_r = ammo_chamber_inner_r + ammo_d * 1/4 ;
+ammo_feeder_outer_r = pod_r_wall_inner - 2;
+// ammo_feeder_circle_position_r = pod_r_wall_inner;
+		// WAS ammo_chamber_inner_r + ammo_d * 0 ;
 		// WAS ammo_chamber_half_inner_r - 1 ;
-ammo_offset = 	sqrt(3*ammo_feeder_circle_position_r*ammo_feeder_circle_position_r);
-
+// ammo_offset = 6;
+		// WAS sqrt(3*ammo_feeder_circle_position_r*ammo_feeder_circle_position_r);
+ammo_slot_center_r = ammo_feeder_outer_r - ammo_r;
 ammo_slot_r = pvc_05in_315psi_r_inner ;
-ammo_slot_r = pvc_05in_r_outer;
+//ammo_slot_r = pvc_05in_r_outer;
  
 
 echo(" *** This block of ECHOs from ammo_feeder-05in_pvc.scad ***");
-echo("ammo_chamber_half_inner_r= ", ammo_chamber_half_inner_r);
+echo("ammo_chamber_middle_r= ", ammo_chamber_middle_r);
 echo("ammo_feeder_cut_r ", ammo_feeder_cut_r);
 echo("ammo_feeder_circle_position_r ", ammo_feeder_circle_position_r);
 echo("ammo_offset = ", ammo_offset );
@@ -56,14 +60,14 @@ echo("ammo_slot_r ", ammo_slot_r);
 
 
 //  This test piece shows full inner diameter of pod
-*%		translate([0,0,muzzle_h_insert/2])
+%		translate([0,0,muzzle_h_insert/2])
 			cylinder(r=pod_r_wall_inner, //muzzle_r_first_step, 
 					h=muzzle_h_insert,
 					center=true, $fn=FN_pod);
 
 
 
-projection(cut=false)	//  MAKE IT Flat!
+//projection(cut=false)	//  MAKE IT Flat!
 {	//  MAKE IT Flat!
 
 //color("blue")
@@ -71,7 +75,7 @@ projection(cut=false)	//  MAKE IT Flat!
 //		union(){
 			color("blue")
 				translate([0,0,muzzle_h_insert/2])
-					cylinder(r=ammo_chamber_half_inner_r,
+					cylinder(r=ammo_feeder_outer_r,
 								h=muzzle_h_insert,
 								center=true, $fn=FN_pod);
 
@@ -103,23 +107,19 @@ projection(cut=false)	//  MAKE IT Flat!
 
 
 		// ===== These are the slots for the darts =====
-			rotate([0,0,60]){
-				// top
-				translate([0,ammo_offset*2/3,muzzle_h_insert/2])
-					cylinder(r=ammo_slot_r, 
-								h=muzzle_h_insert+2,
-								center=true, $fn=FN_pod);
-				//bottom left
-				translate([-ammo_chamber_half_inner_r,ammo_offset/-3,muzzle_h_insert/2])
-					cylinder(r=ammo_slot_r, 
-								h=muzzle_h_insert+2,
-								center=true, $fn=FN_pod);
-				//bottom right
-				translate([ammo_chamber_half_inner_r,ammo_offset/-3,muzzle_h_insert/2])
-					cylinder(r=ammo_slot_r, 
-								h=muzzle_h_insert+2,
-								center=true, $fn=FN_pod);
-			}	// End Dart slot rotation
+			for ( slot_angle = [ -120, 0, 120 ])  
+			{
+				rotate([0,0,slot_angle+60])
+					translate([0,ammo_slot_center_r,muzzle_h_insert/2])
+					{
+						cylinder(r=ammo_slot_r, 
+									h=muzzle_h_insert+2,
+									center=true, $fn=FN_pod);
+						translate([0,ammo_slot_r,0])
+							cube([ammo_slot_r*2, ammo_slot_r*2, muzzle_h_insert+2], center=true);
+					}
+			}
+			// End Dart slots
 
 
 // Comment out this block to get the solid piece
