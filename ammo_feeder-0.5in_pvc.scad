@@ -67,7 +67,7 @@ echo("ammo_slot_r ", ammo_slot_r);
 
 
 
-//projection(cut=false)	//  MAKE IT Flat!
+projection(cut=false)	//  MAKE IT Flat!
 {	//  MAKE IT Flat!
 
 //color("blue")
