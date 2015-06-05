@@ -39,6 +39,8 @@ ammo_slot_r = pvc_05in_r_outer;
 
 thread_depth = ammo_d ;
 thread_width = 10 ;
+thread_segment_height = 20 ; 
+thread_seperation_height = 7 ; 
 
 echo(" *** This block of ECHOs from ammo_feeder-05in_pvc.scad ***");
 echo("ammo_chamber_half_inner_r= ", ammo_chamber_half_inner_r);
@@ -72,8 +74,7 @@ echo("ammo_slot_r ", ammo_slot_r);
 	translate([pod_r_wall_inner-ammo_r -1,0,5])
 		cylinder(r=ammo_r,h=ammo_length);
 
-//projection(cut=false)	//  MAKE IT Flat!
-{	//  MAKE IT Flat!
+
 
 	difference(){
 		union(){
@@ -81,15 +82,10 @@ echo("ammo_slot_r ", ammo_slot_r);
 			//	linear_extrude(height = fanwidth, center = true, convexity = 10, twist = -fanrot, slices = 20, scale = 1.0) {...}
 				linear_extrude(height = ammo_length +10 , twist = -360, slices = 60) {
 					translate([pod_r_wall_inner-thread_depth/2 - 1,0,0])
-			      square([thread_depth,thread_width], center = true);	
+			    	  square([thread_depth,thread_width], center = true);	
 				}
 
-			color("green")
-				difference(){
-					cylinder(r=pod_r_wall_inner, h=ammo_length +10, $fn=FN_pod );
-					translate([0,0,-1])
-					cylinder(r=pod_r_wall_inner-1, h=ammo_length +10 +2 , $fn= FN_pod);
-				}  //End difference
+
 		// End union
 
 		*		translate([0,0,muzzle_h_insert/2])
@@ -99,11 +95,22 @@ echo("ammo_slot_r ", ammo_slot_r);
 		}  // End union 
 
 		union() color("red") {
-%			translate([0,0,muzzle_h_insert/2])
+			translate([0,0,50+20])
 				cube([100,100,100], center = true);
 			
 
 		}	// End union of differences
 }	// End difference
 
-} //end projection
+	//Cylinder wall
+	difference(){
+			color("green")
+				difference(){
+					cylinder(r=pod_r_wall_inner, h=ammo_length +10, $fn=FN_pod );
+					translate([0,0,-1])
+						cylinder(r=pod_r_wall_inner-1, h=ammo_length +10 +2 , $fn= FN_pod);
+				}  //End difference
+
+			translate([0,0,50+20+thread_seperation_height])
+				cube([100,100,100], center = true);
+	}
